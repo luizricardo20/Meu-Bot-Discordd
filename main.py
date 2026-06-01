@@ -10,7 +10,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return "Bot Online 24/7!"
+    return "Bot Online 24/7 - Impérios do Discord Ativos!"
 
 def run():
     port = int(os.environ.get("PORT", 8080))
@@ -32,54 +32,45 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 # ---------- SISTEMA DE TICKET (BOTÃO DE SUPORTE) ----------
 class TicketView(View):
     def __init__(self):
-        super().__init__(timeout=None) # Sem tempo limite para o botão funcionar para sempre
+        super().__init__(timeout=None)
 
-    @discord.ui.button(label="Abrir Ticket", style=discord.ButtonStyle.blurple, custom_id="abrir_ticket_btn", emoji="🎫")
+    @discord.ui.button(label="Abrir Atendimento", style=discord.ButtonStyle.blurple, custom_id="abrir_ticket_btn", emoji="🎫")
     async def button_callback(self, interaction: discord.Interaction, button: Button):
         guild = interaction.guild
         member = interaction.user
         
-        # Procura os cargos de suporte/gerente criados pelo bot
-        cargo_suporte = discord.utils.get(guild.roles, name="Suporte")
-        cargo_gerente = discord.utils.get(guild.roles, name="Gerente")
+        cargo_suporte = discord.utils.get(guild.roles, name="🛠️ Suporte Técnico")
+        cargo_gerente = discord.utils.get(guild.roles, name="💼 Gerente de Vendas")
         
-        # Configura as permissões do canal de ticket privado
         overwrites = {
-            guild.default_role: discord.PermissionOverwrite(read_messages=False), # Esconde de todos
-            member: discord.PermissionOverwrite(read_messages=True, send_messages=True, attach_files=True), # Libera pro cliente
+            guild.default_role: discord.PermissionOverwrite(read_messages=False),
+            member: discord.PermissionOverwrite(read_messages=True, send_messages=True, attach_files=True),
         }
         
-        if cargo_suporte:
-            overwrites[cargo_suporte] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
-        if cargo_gerente:
-            overwrites[cargo_gerente] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
+        if cargo_suporte: overwrites[cargo_suporte] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
+        if cargo_gerente: overwrites[cargo_gerente] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
 
-        # Cria o canal de texto do ticket
         nome_canal = f"🎫-{member.name}".lower()
         ticket_channel = await guild.create_text_channel(name=nome_canal, overwrites=overwrites)
         
-        # Envia mensagem inicial dentro do ticket
         embed = discord.Embed(
-            title="👋 Atendimento Iniciado",
-            description=f"Olá {member.mention}, nossa equipe já foi notificada e falará com você em breve.\n\nPara fechar este atendimento, use o comando: `!fechar`",
+            title="👋 Suporte Inicializado",
+            description=f"Olá {member.mention}, nossa equipe de atendimento foi alertada.\n\nPara fechar o ticket, digite: `!fechar`",
             color=discord.Color.green()
         )
         await ticket_channel.send(embed=embed)
-        
-        # Responde o clique do botão apenas para o usuário ver
-        await interaction.response.send_message(f"✅ Seu ticket foi criado com sucesso em {ticket_channel.mention}!", ephemeral=True)
+        await interaction.response.send_message(f"✅ Ticket criado em {ticket_channel.mention}!", ephemeral=True)
 
 # ---------- EVENTO ON_READY ----------
 @bot.event
 async def on_ready():
-    # Faz com que o botão continue funcionando mesmo se o bot reiniciar
     bot.add_view(TicketView())
     print(f"[INFO] discord.client: logging in using static token")
-    print(f"[INFO] Bot {bot.user.name} está online com Sistema de Tickets!")
+    print(f"[INFO] Bot {bot.user.name} está online no modo Ultra-Massivo!")
 
 # Função auxiliar para limpar o servidor
 async def limpar_servidor(ctx):
-    await ctx.send("🧹 Limpando o servidor para aplicar o novo modelo...")
+    await ctx.send("🧹 Limpando o servidor para aplicar a estrutura ultra-massiva...")
     for channel in ctx.guild.channels:
         try: await channel.delete()
         except: pass
@@ -88,106 +79,109 @@ async def limpar_servidor(ctx):
             try: await role.delete()
             except: pass
 
-# ---------- COMANDOS ANTIGOS (COMUNIDADE, JOGOS, NORMAL) ----------
+# ---------- COMANDO 1: ULTRA COMUNIDADE (60+ CANAIS) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def criar_comunidade(ctx):
     await limpar_servidor(ctx)
-    cargos = ["Dono", "Admin", "Moderador", "Membro Ativo", "Membro"]
+    cargos = ["👑 Dono", "🛡️ Admin", "🔨 Moderador", "💎 Membro Vip", "💬 Membro Ativo", "👤 Membro"]
     for nome_cargo in cargos: await ctx.guild.create_role(name=nome_cargo)
-    cat_info = await ctx.guild.create_category("📌 INFORMAÇÕES")
-    await ctx.guild.create_text_channel("📋-regras", category=cat_info)
-    await ctx.guild.create_text_channel("📢-avisos", category=cat_info)
-    await ctx.guild.create_text_channel("🎉-sorteios", category=cat_info)
-    cat_chat = await ctx.guild.create_category("💬 CHAT GERAL")
-    await ctx.guild.create_text_channel("💬-chat-geral", category=cat_chat)
-    await ctx.guild.create_text_channel("📸-mídias", category=cat_chat)
-    await ctx.guild.create_text_channel("🤖-comandos", category=cat_chat)
-    cat_voz = await ctx.guild.create_category("🎙️ CALLS PÚBLICAS")
-    await ctx.guild.create_voice_channel("🔊 Lounge 01", category=cat_voz)
-    await ctx.guild.create_voice_channel("🔊 Lounge 02", category=cat_voz)
+    
+    cat_diretoria = await ctx.guild.create_category("👑 ━━ DIRETORIA (PRIVADO) ━━")
+    await ctx.guild.create_text_channel("🔒┃chat-staff", category=cat_diretoria)
+    await ctx.guild.create_text_channel("🚨┃alertas-e-punições", category=cat_diretoria)
+    await ctx.guild.create_text_channel("🤖┃logs-do-bot", category=cat_diretoria)
+    await ctx.guild.create_text_channel("💡┃ideias-staff", category=cat_diretoria)
+    
+    cat_info = await ctx.guild.create_category("📌 ━━ INFORMAÇÕES ━━")
+    await ctx.guild.create_text_channel("📋┃regras", category=cat_info)
+    await ctx.guild.create_text_channel("📢┃avisos", category=cat_info)
+    await ctx.guild.create_text_channel("🎉┃sorteios", category=cat_info)
+    await ctx.guild.create_text_channel("🎁┃eventos", category=cat_info)
+    await ctx.guild.create_text_channel("🔗┃nossas-redes", category=cat_info)
+    await ctx.guild.create_text_channel("🤝┃parcerias", category=cat_info)
+    await ctx.guild.create_text_channel("🚀┃vantagens-booster", category=cat_info)
+    
+    cat_welcome = await ctx.guild.create_category("👋 ━━ RECEPÇÃO ━━")
+    await ctx.guild.create_text_channel("👋┃chegadas", category=cat_welcome)
+    await ctx.guild.create_text_channel("🚪┃saídas", category=cat_welcome)
+    await ctx.guild.create_text_channel("🎂┃aniversários", category=cat_welcome)
+    await ctx.guild.create_text_channel("🏆┃hall-da-fama", category=cat_welcome)
+    
+    cat_chat = await ctx.guild.create_category("💬 ━━ INTERAÇÃO GERAL ━━")
+    await ctx.guild.create_text_channel("💬┃chat-geral", category=cat_chat)
+    await ctx.guild.create_text_channel("🧠┃debates", category=cat_chat)
+    await ctx.guild.create_text_channel("🎭┃memes", category=cat_chat)
+    await ctx.guild.create_text_channel("🤖┃comandos", category=cat_chat)
+    await ctx.guild.create_text_channel("🔮┃filosofia", category=cat_chat)
+    await ctx.guild.create_text_channel("💭┃desabafos", category=cat_chat)
+    await ctx.guild.create_text_channel("📌┃mensagens-marcantes", category=cat_chat)
+    
+    cat_global = await ctx.guild.create_category("🌍 ━━ GLOBAL CHATS ━━")
+    await ctx.guild.create_text_channel("🇺🇸┃english-chat", category=cat_global)
+    await ctx.guild.create_text_channel("🇪🇸┃espanol-chat", category=cat_global)
+    
+    cat_midia = await ctx.guild.create_category("📸 ━━ GALERIA MÍDIAS ━━")
+    await ctx.guild.create_text_channel("📸┃mídias", category=cat_midia)
+    await ctx.guild.create_text_channel("🎨┃arte-e-design", category=cat_midia)
+    await ctx.guild.create_text_channel("🐱┃pets", category=cat_midia)
+    await ctx.guild.create_text_channel("💻┃setups", category=cat_midia)
+    await ctx.guild.create_text_channel("🍔┃gastronomia", category=cat_midia)
+    
+    cat_cultura = await ctx.guild.create_category("🏮 ━━ CULTURA POP ━━")
+    await ctx.guild.create_text_channel("🍿┃filmes-e-séries", category=cat_cultura)
+    await ctx.guild.create_text_channel("🏮┃animes-e-manga", category=cat_cultura)
+    await ctx.guild.create_text_channel("🎵┃recomende-músicas", category=cat_cultura)
+    await ctx.guild.create_text_channel("📚┃livros-e-hqs", category=cat_cultura)
+    await ctx.guild.create_text_channel("🎮┃jogos-do-momento", category=cat_cultura)
+    
+    cat_entrete = await ctx.guild.create_category("📈 ━━ ECONOMIA & GAMES ━━")
+    await ctx.guild.create_text_channel("📈┃level-up", category=cat_entrete)
+    await ctx.guild.create_text_channel("🎰┃cassino", category=cat_entrete)
+    await ctx.guild.create_text_channel("🧩┃gincanas", category=cat_entrete)
+    await ctx.guild.create_text_channel("💰┃trabalhar-bot", category=cat_entrete)
+    await ctx.guild.create_text_channel("🛡️┃ranking-geral", category=cat_entrete)
+    
+    cat_voz = await ctx.guild.create_category("🎙️ ━━ LOUNGES COLETIVOS ━━")
+    for i in range(1, 6): await ctx.guild.create_voice_channel(f"🔊 Lounge {i:02d}", category=cat_voz)
     await ctx.guild.create_voice_channel("🔊 Conversa Fiada", category=cat_voz)
+    await ctx.guild.create_voice_channel("🔊 Cantinho da Música", category=cat_voz)
+    await ctx.guild.create_voice_channel("🔊 Sala de Cinema", category=cat_voz)
+    
+    cat_voz_priv = await ctx.guild.create_category("🔒 ━━ SALAS PRIVADAS (VOZ) ━━")
+    for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔒 Duozinho {i:02d}", category=cat_voz_priv)
+    for i in range(1, 3): await ctx.guild.create_voice_channel(f"🔒 Triozinho {i:02d}", category=cat_voz_priv)
+    await ctx.guild.create_voice_channel("📻 Rádio 24h", category=cat_voz_priv)
+    await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_voz_priv)
 
+# ---------- COMANDO 2: ULTRA JOGOS (70+ CANAIS) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def criar_jogos(ctx):
     await limpar_servidor(ctx)
-    cargos = ["Dono", "Staff", "Vip", "Streamer", "Jogador"]
+    cargos = ["👑 Dono", "🕹️ Staff Gamer", "💎 Vip Master", "🎥 Streamer", "🏆 Pro Player", "🎮 Jogador"]
     for nome_cargo in cargos: await ctx.guild.create_role(name=nome_cargo)
-    cat_comunidade = await ctx.guild.create_category("🎮 COMUNIDADE")
-    await ctx.guild.create_text_channel("📢-novidades", category=cat_comunidade)
-    await ctx.guild.create_text_channel("💬-chat-games", category=cat_comunidade)
-    await ctx.guild.create_text_channel("clips-e-lives", category=cat_comunidade)
-    cat_squads = await ctx.guild.create_category("🔊 SQUADS (CALLS)")
-    await ctx.guild.create_voice_channel("🔊 Squad Alpha (04)", category=cat_squads)
-    await ctx.guild.create_voice_channel("🔊 Squad Bravo (04)", category=cat_squads)
-    await ctx.guild.create_voice_channel("🔊 Duos", category=cat_squads)
-    cat_comp = await ctx.guild.create_category("🏆 COMPETITIVO")
-    await ctx.guild.create_text_channel("🏆-torneios", category=cat_comp)
-    await ctx.guild.create_text_channel("🏅-resultados", category=cat_comp)
-
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def criar_normal(ctx):
-    await limpar_servidor(ctx)
-    cargos = ["Dono", "Staff", "Membro"]
-    for nome_cargo in cargos: await ctx.guild.create_role(name=nome_cargo)
-    cat_welcome = await ctx.guild.create_category("👋 BEM-VINDO")
-    await ctx.guild.create_text_channel("regras", category=cat_welcome)
-    await ctx.guild.create_text_channel("avisos", category=cat_welcome)
-    cat_texto = await ctx.guild.create_category("💬 TEXTO")
-    await ctx.guild.create_text_channel("chat-geral", category=cat_texto)
-    await ctx.guild.create_text_channel("comandos", category=cat_texto)
-    cat_voz = await ctx.guild.create_category("🔊 VOZ")
-    await ctx.guild.create_voice_channel("Geral 1", category=cat_voz)
-    await ctx.guild.create_voice_channel("Geral 2", category=cat_voz)
-
-# ---------- COMANDO 3 COM TICKET INTEGRADO: LOJA ----------
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def criar_loja(ctx):
-    await limpar_servidor(ctx)
     
-    cargos = ["Dono", "Gerente", "Suporte", "Cliente Vip", "Cliente"]
-    for nome_cargo in cargos: 
-        await ctx.guild.create_role(name=nome_cargo)
-        
-    cat_vitrine = await ctx.guild.create_category("🛒 VITRINE")
-    await ctx.guild.create_text_channel("📌-regras-da-loja", category=cat_vitrine)
-    await ctx.guild.create_text_channel("💰-produtos", category=cat_vitrine)
-    await ctx.guild.create_text_channel("⭐-avaliações", category=cat_vitrine)
+    cat_comunidade = await ctx.guild.create_category("🎮 ━━ LOBBY GERAL ━━")
+    await ctx.guild.create_text_channel("📢┃novidades", category=cat_comunidade)
+    await ctx.guild.create_text_channel("💬┃chat-games", category=cat_comunidade)
+    await ctx.guild.create_text_channel("🎥┃clips-e-lives", category=cat_comunidade)
+    await ctx.guild.create_text_channel("setup┃periféricos", category=cat_comunidade)
+    await ctx.guild.create_text_channel("🔍┃procurar-grupo", category=cat_comunidade)
+    await ctx.guild.create_text_channel("🤖┃bots-games", category=cat_comunidade)
+    await ctx.guild.create_text_channel("📺┃noticias-gaming", category=cat_comunidade)
     
-    cat_atendimento = await ctx.guild.create_category("🎫 ATENDIMENTO")
-    # Cria o canal de ticket normal
-    canal_ticket = await ctx.guild.create_text_channel("🎫-abra-ticket", category=cat_atendimento)
+    cat_comp = await ctx.guild.create_category("🏆 ━━ COMPETITIVO ━━")
+    await ctx.guild.create_text_channel("🏆┃torneios", category=cat_comp)
+    await ctx.guild.create_text_channel("🏅┃resultados", category=cat_comp)
+    await ctx.guild.create_text_channel("📝┃inscrições", category=cat_comp)
+    await ctx.guild.create_text_channel("⚔️┃desafios-x1", category=cat_comp)
+    await ctx.guild.create_text_channel("📋┃regras-campeonatos", category=cat_comp)
+    await ctx.guild.create_text_channel("💰┃premiações", category=cat_comp)
     
-    cat_entregas = await ctx.guild.create_category("📦 ENTREGAS")
-    await ctx.guild.create_text_channel("✅-provas-de-entrega", category=cat_entregas)
-    await ctx.guild.create_text_channel("📢-atualizações", category=cat_entregas)
-
-    # Envia o Painel de Ticket Automático com botão no canal recém-criado
-    embed = discord.Embed(
-        title="💼 Central de Atendimento da Loja",
-        description="Precisa tirar dúvidas ou comprar um produto?\nClique no botão abaixo para abrir um chat de suporte privado!",
-        color=discord.Color.blue()
-    )
-    await canal_ticket.send(embed=embed, view=TicketView())
-
-# ---------- COMANDO PARA FECHAR TICKET ----------
-@bot.command()
-@commands.has_permissions(manage_channels=True)
-async def fechar(ctx):
-    if ctx.channel.name.startswith("🎫-"):
-        await ctx.send("🔒 Este ticket será fechado em 5 segundos...")
-        import asyncio
-        await asyncio.sleep(5)
-        await ctx.channel.delete()
-    else:
-        await ctx.send("❌ Você só pode usar este comando dentro de um canal de ticket!")
-
-# ---------- INICIALIZAÇÃO ----------
-if __name__ == "__main__":
-    keep_alive()
-    token = os.environ.get("DISCORD_TOKEN")
-    if token: bot.run(token)
-    else: print("[ERRO] Variável DISCORD_TOKEN não encontrada!")
+    cat_fps = await ctx.guild.create_category("🔫 ━━ FPS ARENA ━━")
+    await ctx.guild.create_text_channel("💣┃valorant", category=cat_fps)
+    await ctx.guild.create_text_channel("🎯┃cs2", category=cat_fps)
+    await ctx.guild.create_text_channel("👑┃warzone", category=cat_fps)
+    await ctx.guild.create_text_channel("🔥┃free-fire", category=cat_fps)
+            
