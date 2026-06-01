@@ -5,7 +5,6 @@ from discord.ext import commands
 from discord.ui import Button, View
 from flask import Flask
 from threading import Thread
-
 # ---------- CONFIGURAÇÃO DO SERVIDOR WEB (FLASK) ----------
 app = Flask('')
 
@@ -20,7 +19,6 @@ def run():
 def keep_alive():
     t = Thread(target=run)
     t.start()
-
 # ---------- CONFIGURAÇÃO DO BOT DO DISCORD ----------
 intents = discord.Intents.default()
 intents.messages = True
@@ -29,7 +27,6 @@ intents.message_content = True
 intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
-
 # ---------- SISTEMA DE TICKET (BOTÃO DE SUPORTE) ----------
 class TicketView(View):
     def __init__(self):
@@ -42,8 +39,7 @@ class TicketView(View):
         cargo_suporte = discord.utils.get(guild.roles, name="🛠️ Suporte Técnico") or discord.utils.get(guild.roles, name="🔨 Moderador")
         overwrites = {
             guild.default_role: discord.PermissionOverwrite(read_messages=False),
-            member: discord.PermissionOverwrite(read_messages=True, send_messages=True, attach_files=True),
-        }
+            member: discord.PermissionOverwrite(read_messages=True, send_messages=True, attach_files=True),}
         if cargo_suporte: 
             overwrites[cargo_suporte] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
         nome_canal = f"🎫-{member.name}".lower()
@@ -51,17 +47,14 @@ class TicketView(View):
         embed = discord.Embed(
             title="👋 Suporte Inicializado",
             description=f"Olá {member.mention}, nossa equipe de atendimento foi alertada.\n\nPara fechar o ticket, digite: `!fechar`",
-            color=discord.Color.green()
-        )
+            color=discord.Color.green())
         await ticket_channel.send(embed=embed)
         await interaction.response.send_message(f"✅ Ticket criado em {ticket_channel.mention}!", ephemeral=True)
-
 # ---------- EVENTO ON_READY ----------
 @bot.event
 async def on_ready():
     bot.add_view(TicketView())
     print(f"[INFO] Bot {bot.user.name} online no modo Supremo de 12 Imperios!")
-
 # Função auxiliar para limpar o servidor antes de recriar
 async def limpar_servidor(ctx):
     await ctx.send("🧹 Limpando o servidor para aplicar a nova estrutura...")
@@ -72,7 +65,6 @@ async def limpar_servidor(ctx):
         if role.name != "@everyone" and not role.managed:
             try: await role.delete()
             except: pass
-
 # ---------- COMANDO 1: MEGA NORMAL (Amigos) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -138,7 +130,6 @@ async def criar_loja(ctx):
     await ctx.guild.create_text_channel("❓┃perguntas-frequentes", category=cat_suporte)
     await ctx.guild.create_text_channel("💵┃métodos-pagamento", category=cat_suporte)
     await ctx.guild.create_text_channel("🚨┃denuncias-e-reclamações", category=cat_suporte)
-
 # ---------- COMANDO 3: MEGA COMUNIDADE (Social) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -194,7 +185,6 @@ async def criar_comunidade(ctx):
     await ctx.guild.create_voice_channel("🔊 Conversa Fiada", category=cat_voz)
     await ctx.guild.create_voice_channel("🔊 Cantinho da Música", category=cat_voz)
     await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_voz)
-
 # ---------- COMANDO 4: MEGA JOGOS (Gaming) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -264,7 +254,6 @@ async def criar_streamer(ctx):
     for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Jogando com Inscritos {i:02d}", category=cat_calls)
     await ctx.guild.create_voice_channel("🔒 Sala de Gravação", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_calls)
-
 # ---------- COMANDO 6: MEGA DESENHO (Artes/Ilustração) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -298,7 +287,6 @@ async def criar_desenho(ctx):
     for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Desenhe Comigo {i:02d}", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 Compartilhando Tela", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_calls)
-
 # ---------- COMANDO 7: MEGA MARKETING (Dropshipping/PLR) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -332,7 +320,6 @@ async def criar_marketing(ctx):
     for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Mastermind Geral {i:02d}", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 Call de Network", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_calls)
-
 # ---------- COMANDO 8: MEGA DESIGN (Edição Visual) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -397,7 +384,6 @@ async def criar_tecnologia(ctx):
     for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Bancada de Testes {i:02d}", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 Assistência Remota", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_calls)
-
 # ---------- COMANDO 10: MEGA CINEMA (Filmes/Séries) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
