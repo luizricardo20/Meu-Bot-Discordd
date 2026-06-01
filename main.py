@@ -211,3 +211,8 @@ async def main():
     keep_alive()
     token = os.environ.get("DISCORD_TOKEN")
     if token is None:
+        token = "SEU_TOKEN_AQUI"
+    await bot.start(token)
+
+if __name__ == "__main__":
+    
