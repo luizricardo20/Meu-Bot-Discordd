@@ -11,7 +11,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return "Bot Online 24/7 - Imperio Supremo de 12 Modos Ativo!"
+    return "Bot Online 24/7 - Sistema Supremo de 12 Imperios Ativo!"
 
 def run():
     port = int(os.environ.get("PORT", 8080))
@@ -60,7 +60,7 @@ class TicketView(View):
 @bot.event
 async def on_ready():
     bot.add_view(TicketView())
-    print(f"[INFO] Bot {bot.user.name} online no modo Imperador de 12 Estruturas!")
+    print(f"[INFO] Bot {bot.user.name} online no modo Supremo de 12 Imperios!")
 
 # Função auxiliar para limpar o servidor antes de recriar
 async def limpar_servidor(ctx):
@@ -72,7 +72,8 @@ async def limpar_servidor(ctx):
         if role.name != "@everyone" and not role.managed:
             try: await role.delete()
             except: pass
-                # ---------- COMANDO 1: ULTRA NORMAL (Amigos) ----------
+
+# ---------- COMANDO 1: MEGA NORMAL (Amigos) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def criar_normal(ctx):
@@ -80,32 +81,33 @@ async def criar_normal(ctx):
     cargos = ["👑 Fundador", "🛡️ ADM", "🔨 Moderador", "💎 Vip", "👤 Amigos"]
     for nc in cargos: await ctx.guild.create_role(name=nc)
     
-    c1 = await ctx.guild.create_category("📌 ━━ ESSENCIAL ━━")
-    for ch in ["📢┃avisos", "📋┃regras", "🔗┃links-uteis", "📌┃diretrizes"]: await ctx.guild.create_text_channel(ch, category=c1)
+    cat_essencial = await ctx.guild.create_category("📌 ━━ ESSENCIAL ━━")
+    await ctx.guild.create_text_channel("📢┃avisos", category=cat_essencial)
+    await ctx.guild.create_text_channel("👋┃boas-vindas", category=cat_essencial)
+    await ctx.guild.create_text_channel("🚪┃saidas", category=cat_essencial)
+    await ctx.guild.create_text_channel("📋┃regras", category=cat_essencial)
     
-    c2 = await ctx.guild.create_category("👋 ━━ RECEPÇÃO ━━")
-    for ch in ["👋┃boas-vindas", "🚪┃saidas", "🎂┃aniversarios"]: await ctx.guild.create_text_channel(ch, category=c2)
+    cat_resenha = await ctx.guild.create_category("💬 ━━ CONVERSA GERAL ━━")
+    await ctx.guild.create_text_channel("💬┃chat-geral", category=cat_resenha)
+    await ctx.guild.create_text_channel("🎭┃memes", category=cat_resenha)
+    await ctx.guild.create_text_channel("📸┃midias-e-fotos", category=cat_resenha)
+    await ctx.guild.create_text_channel("🎵┃recomende-musicas", category=cat_resenha)
+    await ctx.guild.create_text_channel("💭┃desabafos", category=cat_resenha)
+    await ctx.guild.create_text_channel("🤖┃comandos-bots", category=cat_resenha)
     
-    c3 = await ctx.guild.create_category("💬 ━━ CONVERSA GERAL ━━")
-    for ch in ["💬┃chat-geral", "🎭┃memes", "📸┃midias-e-fotos", "💭┃desabafos", "🧠┃debates", "🔮┃filosofia"]: await ctx.guild.create_text_channel(ch, category=c3)
+    cat_entrete = await ctx.guild.create_category("🧩 ━━ DIVERSÃO ━━")
+    await ctx.guild.create_text_channel("🎰┃cassino", category=cat_entrete)
+    await ctx.guild.create_text_channel("📈┃level-up", category=cat_entrete)
+    await ctx.guild.create_text_channel("🎨┃artes-e-desenhos", category=cat_entrete)
     
-    c4 = await ctx.guild.create_category("🧩 ━━ DIVERSÃO & BOTS ━━")
-    for ch in ["🎰┃cassino", "📈┃level-up", "🤖┃comandos-bots", "🎮┃minigames"]: await ctx.guild.create_text_channel(ch, category=c4)
-    
-    c5 = await ctx.guild.create_category("📸 ━━ GALERIA SOCIAL ━━")
-    for ch in ["🐱┃pets-e-animais", "💻┃setups-membros", "🍔┃culinaria-fotos"]: await ctx.guild.create_text_channel(ch, category=c5)
-    
-    c6 = await ctx.guild.create_category("🔊 ━━ CALLS COLETIVAS ━━")
-    for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Lounge {i:02d}", category=c6)
-    await ctx.guild.create_voice_channel("🔊 Conversa Fiada", category=c6)
-    await ctx.guild.create_voice_channel("🍿 Sala de Cinema", category=c6)
-    await ctx.guild.create_voice_channel("🔊 Cantinho da Música", category=c6)
-    
-    c7 = await ctx.guild.create_category("🔒 ━━ CALLS PRIVADAS ━━")
-    for i in range(1, 3): await ctx.guild.create_voice_channel(f"🔒 Duozinho {i:02d}", category=c7)
-    await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=c7)
-
-# ---------- COMANDO 2: ULTRA LOJA (Vendas) ----------
+    cat_calls = await ctx.guild.create_category("🔊 ━━ CALLS COLETIVAS ━━")
+    await ctx.guild.create_voice_channel("🔊 Lounge 01", category=cat_calls)
+    await ctx.guild.create_voice_channel("🔊 Lounge 02", category=cat_calls)
+    await ctx.guild.create_voice_channel("🔊 Conversa Fiada", category=cat_calls)
+    await ctx.guild.create_voice_channel("🍿 Sala de Cinema", category=cat_calls)
+    await ctx.guild.create_voice_channel("🔊 Cantinho da Música", category=cat_calls)
+    await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_calls)
+    # ---------- COMANDO 2: MEGA LOJA (Vendas) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def criar_loja(ctx):
@@ -113,29 +115,121 @@ async def criar_loja(ctx):
     cargos = ["👑 Diretor", "💼 Gerente de Vendas", "🛠️ Suporte Técnico", "⭐ Cliente VIP", "🛒 Cliente"]
     for nc in cargos: await ctx.guild.create_role(name=nc)
     
-    c1 = await ctx.guild.create_category("🏢 ━━ INSTITUCIONAL ━━")
-    for ch in ["📢┃anúncios", "📋┃termos-e-regras", "🔗┃links-oficiais", "📢┃avisos-importantes"]: await ctx.guild.create_text_channel(ch, category=c1)
+    cat_inst = await ctx.guild.create_category("🏢 ━━ INSTITUCIONAL ━━")
+    await ctx.guild.create_text_channel("📢┃anúncios", category=cat_inst)
+    await ctx.guild.create_text_channel("📋┃termos-e-regras", category=cat_inst)
+    await ctx.guild.create_text_channel("🔗┃links-oficiais", category=cat_inst)
+    await ctx.guild.create_text_channel("🎉┃sorteios-loja", category=cat_inst)
     
-    c2 = await ctx.guild.create_category("🛒 ━━ VITRINE DE PRODUTOS ━━")
-    for ch in ["💎┃produtos-vip", "🔥┃promoções-relampago", "📦┃estoque-atualizado", "💻┃contas-full-acesso", "🎁┃brindes-gratuitos"]: await ctx.guild.create_text_channel(ch, category=c2)
+    cat_vitrine = await ctx.guild.create_category("🛒 ━━ VITRINE DE PRODUTOS ━━")
+    await ctx.guild.create_text_channel("💎┃produtos-vip", category=cat_vitrine)
+    await ctx.guild.create_text_channel("🔥┃promoções-relampago", category=cat_vitrine)
+    await ctx.guild.create_text_channel("📦┃estoque-atualizado", category=cat_vitrine)
+    await ctx.guild.create_text_channel("💻┃contas-full-acesso", category=cat_vitrine)
+    await ctx.guild.create_text_channel("🎁┃brindes-gratuitos", category=cat_vitrine)
     
-    c3 = await ctx.guild.create_category("✅ ━━ CONFIANÇA & FEEDBACK ━━")
-    for ch in ["💖┃avaliações-clientes", "📈┃provas-de-entrega", "🤝┃parcerias", "📊┃nossos-numeros"]: await ctx.guild.create_text_channel(ch, category=c3)
+    cat_confianca = await ctx.guild.create_category("✅ ━━ CONFIANÇA & FEEDBACK ━━")
+    await ctx.guild.create_text_channel("💖┃avaliações-clientes", category=cat_confianca)
+    await ctx.guild.create_text_channel("📈┃provas-de-entrega", category=cat_confianca)
+    await ctx.guild.create_text_channel("🤝┃parcerias", category=cat_confianca)
     
-    c4 = await ctx.guild.create_category("🎫 ━━ ATENDIMENTO & AJUDA ━━")
-    for ch in ["🎫┃abrir-suporte", "❓┃perguntas-frequentes", "💵┃métodos-pagamento", "🚨┃denuncias-reclamações"]: await ctx.guild.create_text_channel(ch, category=c4)
+    cat_suporte = await ctx.guild.create_category("🎫 ━━ ATENDIMENTO & AJUDA ━━")
+    await ctx.guild.create_text_channel("🎫┃abrir-suporte", category=cat_suporte)
+    await ctx.guild.create_text_channel("❓┃perguntas-frequentes", category=cat_suporte)
+    await ctx.guild.create_text_channel("💵┃métodos-pagamento", category=cat_suporte)
+    await ctx.guild.create_text_channel("🚨┃denuncias-e-reclamações", category=cat_suporte)
+
+# ---------- COMANDO 3: MEGA COMUNIDADE (Social) ----------
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def criar_comunidade(ctx):
+    await limpar_servidor(ctx)
+    cargos = ["👑 Dono", "🛡️ Admin", "🔨 Moderador", "💎 Membro Vip", "💬 Membro Ativo", "👤 Membro"]
+    for nc in cargos: await ctx.guild.create_role(name=nc)
     
-    c5 = await ctx.guild.create_category("🎉 ━━ MARKETING & EVENTOS ━━")
-    for ch in ["🎉┃sorteios-loja", "🎁┃eventos-comunidade", "🚀┃boost-vantagens"]: await ctx.guild.create_text_channel(ch, category=c5)
+    cat_staff = await ctx.guild.create_category("👑 ━━ DIRETORIA (PRIVADO) ━━")
+    await ctx.guild.create_text_channel("🔒┃chat-staff", category=cat_staff)
+    await ctx.guild.create_text_channel("🚨┃alertas-e-punicoes", category=cat_staff)
+    await ctx.guild.create_text_channel("🤖┃logs-do-bot", category=cat_staff)
+    await ctx.guild.create_text_channel("💡┃ideias-staff", category=cat_staff)
     
-    c6 = await ctx.guild.create_category("💬 ━━ CHAT DE CLIENTES ━━")
-    for ch in ["💬┃chat-geral", "🤖┃comandos-bots", "📸┃mídias-clientes"]: await ctx.guild.create_text_channel(ch, category=c6)
+    cat_info = await ctx.guild.create_category("📌 ━━ INFORMAÇÕES ━━")
+    await ctx.guild.create_text_channel("📋┃regras", category=cat_info)
+    await ctx.guild.create_text_channel("📢┃avisos", category=cat_info)
+    await ctx.guild.create_text_channel("🎉┃sorteios", category=cat_info)
+    await ctx.guild.create_text_channel("🎁┃eventos", category=cat_info)
+    await ctx.guild.create_text_channel("🔗┃nossas-redes", category=cat_info)
+    await ctx.guild.create_text_channel("🚀┃vantagens-booster", category=cat_info)
     
-    c7 = await ctx.guild.create_category("🎙️ ━━ REUNIÕES & SUPORTE ━━")
-    await ctx.guild.create_voice_channel("🔊 Suporte Via Voz 01", category=c7)
-    await ctx.guild.create_voice_channel("🔊 Suporte Via Voz 02", category=c7)
-    await ctx.guild.create_voice_channel("💼 Reunião de Vendas", category=c7)
-    await ctx.guild.create_voice_channel("🔊 Sala de Espera", category=c7)
+    cat_welcome = await ctx.guild.create_category("👋 ━━ RECEPÇÃO ━━")
+    await ctx.guild.create_text_channel("👋┃chegadas", category=cat_welcome)
+    await ctx.guild.create_text_channel("🚪┃saídas", category=cat_welcome)
+    await ctx.guild.create_text_channel("🎂┃aniversários", category=cat_welcome)
+    
+    cat_chat = await ctx.guild.create_category("💬 ━━ INTERAÇÃO GERAL ━━")
+    await ctx.guild.create_text_channel("💬┃chat-geral", category=cat_chat)
+    await ctx.guild.create_text_channel("🧠┃debates", category=cat_chat)
+    await ctx.guild.create_text_channel("🎭┃memes", category=cat_chat)
+    await ctx.guild.create_text_channel("🤖┃comandos", category=cat_chat)
+    await ctx.guild.create_text_channel("💭┃desabafos", category=cat_chat)
+    
+    cat_midia = await ctx.guild.create_category("📸 ━━ GALERIA MÍDIAS ━━")
+    await ctx.guild.create_text_channel("📸┃mídias", category=cat_midia)
+    await ctx.guild.create_text_channel("🎨┃arte-e-design", category=cat_midia)
+    await ctx.guild.create_text_channel("🐱┃pets", category=cat_midia)
+    await ctx.guild.create_text_channel("💻┃setups", category=cat_midia)
+    
+    cat_cultura = await ctx.guild.create_category("🏮 ━━ CULTURA POP ━━")
+    await ctx.guild.create_text_channel("🍿┃filmes-e-séries", category=cat_cultura)
+    await ctx.guild.create_text_channel("🏮┃animes-e-manga", category=cat_cultura)
+    await ctx.guild.create_text_channel("🎵┃recomende-músicas", category=cat_cultura)
+    
+    cat_entrete = await ctx.guild.create_category("📈 ━━ ECONOMIA & GAMES ━━")
+    await ctx.guild.create_text_channel("📈┃level-up", category=cat_entrete)
+    await ctx.guild.create_text_channel("🎰┃cassino", category=cat_entrete)
+    await ctx.guild.create_text_channel("🧩┃gincanas", category=cat_entrete)
+    
+    cat_voz = await ctx.guild.create_category("🎙️ ━━ LOUNGES COLETIVOS ━━")
+    for i in range(1, 6): await ctx.guild.create_voice_channel(f"🔊 Lounge {i:02d}", category=cat_voz)
+    await ctx.guild.create_voice_channel("🔊 Conversa Fiada", category=cat_voz)
+    await ctx.guild.create_voice_channel("🔊 Cantinho da Música", category=cat_voz)
+    await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_voz)
+
+# ---------- COMANDO 4: MEGA JOGOS (Gaming) ----------
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def criar_jogos(ctx):
+    await limpar_servidor(ctx)
+    cargos = ["👑 Dono", "🕹️ Staff Gamer", "💎 Vip Master", "🎥 Streamer", "🏆 Pro Player", "🎮 Jogador"]
+    for nc in cargos: await ctx.guild.create_role(name=nc)
+    
+    cat_comunidade = await ctx.guild.create_category("🎮 ━━ LOBBY GERAL ━━")
+    await ctx.guild.create_text_channel("📢┃novidades", category=cat_comunidade)
+    await ctx.guild.create_text_channel("💬┃chat-games", category=cat_comunidade)
+    await ctx.guild.create_text_channel("🎥┃clips-e-lives", category=cat_comunidade)
+    await ctx.guild.create_text_channel("🔍┃procurar-grupo", category=cat_comunidade)
+    await ctx.guild.create_text_channel("🤖┃bots-games", category=cat_comunidade)
+    
+    cat_comp = await ctx.guild.create_category("🏆 ━━ COMPETITIVO ━━")
+    await ctx.guild.create_text_channel("🏆┃torneios", category=cat_comp)
+    await ctx.guild.create_text_channel("🏅┃resultados", category=cat_comp)
+    await ctx.guild.create_text_channel("📝┃inscrições", category=cat_comp)
+    await ctx.guild.create_text_channel("⚔️┃desafios-x1", category=cat_comp)
+    await ctx.guild.create_text_channel("📋┃regras-campeonatos", category=cat_comp)
+    
+    cat_fps = await ctx.guild.create_category("🔫 ━━ FPS ARENA ━━")
+    await ctx.guild.create_text_channel("💣┃valorant", category=cat_fps)
+    await ctx.guild.create_text_channel("🎯┃cs2", category=cat_fps)
+    await ctx.guild.create_text_channel("👑┃warzone", category=cat_fps)
+    await ctx.guild.create_text_channel("🔥┃free-fire", category=cat_fps)
+    await ctx.guild.create_text_channel("⛏️┃minecraft", category=cat_fps)
+    await ctx.guild.create_text_channel("🚗┃gta-v-rp", category=cat_fps)
+    
+    cat_v_games = await ctx.guild.create_category("🔊 ━━ SQUADS & COMP ━━")
+    for i in range(1, 4): await ctx.guild.create_voice_channel(f"🎮 Squad {i:02d}", category=cat_v_games)
+    for i in range(1, 3): await ctx.guild.create_voice_channel(f"🔒 Duozinho {i:02d}", category=cat_v_games)
+    await ctx.guild.create_voice_channel("📻 Rádio Gamer 24h", category=cat_v_games)
+    await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_v_games)
     # ---------- COMANDO 5: MEGA STREAMER (Criadores de Conteúdo) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -204,7 +298,8 @@ async def criar_desenho(ctx):
     for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Desenhe Comigo {i:02d}", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 Compartilhando Tela", category=cat_calls)
     await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_calls)
-    # ---------- COMANDO 7: MEGA MARKETING (Dropshipping/PLR) ----------
+
+# ---------- COMANDO 7: MEGA MARKETING (Dropshipping/PLR) ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def criar_marketing(ctx):
@@ -231,7 +326,7 @@ async def criar_marketing(ctx):
     
     cat_vip = await ctx.guild.create_category("👑 ━━ AREA PREMIUM VIP ━━")
     await ctx.guild.create_text_channel("🔒┃estrategias-secretas", category=cat_vip)
-    await ctx.guild.create_text_channel("📈┃call-de-mentoria", category=vip) if 'vip' in locals() else await ctx.guild.create_text_channel("📈┃call-de-mentoria", category=cat_vip)
+    await ctx.guild.create_text_channel("📈┃call-de-mentoria", category=cat_vip)
     
     cat_calls = await ctx.guild.create_category("🎙️ ━━ MASTERMIND CALLS ━━")
     for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Mastermind Geral {i:02d}", category=cat_calls)
@@ -316,124 +411,4 @@ async def criar_cinema(ctx):
     await ctx.guild.create_text_channel("🎉┃noite-de-estreia", category=cat_av)
     
     cat_mural = await ctx.guild.create_category("🍿 ━━ CARTAZ DO DIA ━━")
-    await ctx.guild.create_text_channel("🎬┃trailers-e-novidades", category=cat_mural)
-    await ctx.guild.create_text_channel("📰┃noticias-da-critica", category=cat_mural)
-    await ctx.guild.create_text_channel("🗓️┃calendario-lançamentos", category=cat_mural)
-    
-    cat_resenha = await ctx.guild.create_category("💬 ━━ SALAS DE DEBATE ━━")
-    await ctx.guild.create_text_channel("💬┃papo-de-cinema", category=cat_resenha)
-    await ctx.guild.create_text_channel("🚨┃chat-com-spoiler", category=cat_resenha)
-    await ctx.guild.create_text_channel("🤫┃chat-sem-spoiler", category=cat_resenha)
-    await ctx.guild.create_text_channel("🧠┃teorias-e-finais", category=cat_resenha)
-    await ctx.guild.create_text_channel("📺┃series-e-desenhos", category=cat_resenha)
-    
-    cat_indicacao = await ctx.guild.create_category("⭐ ━━ RECOMENDAÇÕES ━━")
-    await ctx.guild.create_text_channel("💖┃filmes-favoritos", category=cat_indicacao)
-    await ctx.guild.create_text_channel("💀┃terror-e-suspense", category=cat_indicacao)
-    await ctx.guild.create_text_channel("🤖┃ficção-e-herois", category=cat_indicacao)
-    
-    cat_calls = await ctx.guild.create_category("🎙️ ━━ AUDITÓRIOS ━━")
-        await ctx.guild.create_voice_channel("🍿 Cine Pipoca 01", category=cat_calls)
-    await ctx.guild.create_voice_channel("🍿 Cine Pipoca 02", category=cat_calls)
-    await ctx.guild.create_voice_channel("📺 Maratona de Séries", category=cat_calls)
-    await ctx.guild.create_voice_channel("📻 Rádio Cinema 24h", category=cat_calls)
-    await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_calls)
-
-# ---------- COMANDO 11: MEGA ANIME (Cultura Otaku) ----------
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def criar_anime(ctx):
-    await limpar_servidor(ctx)
-    cargos = ["👑 Hokage Mestre", "⛩️ Otaku Lendário", "🔮 Mangaká VIP", "🏮 Cosplayer Profissional", "🌸 Membro Otaku", "👤 Civil"]
-    for nc in cargos: await ctx.guild.create_role(name=nc)
-    
-    cat_mural = await ctx.guild.create_category("⛩️ ━━ QUADRO DE AVISOS ━━")
-    await ctx.guild.create_text_channel("📢┃lançamentos-da-semana", category=cat_mural)
-    await ctx.guild.create_text_channel("📌┃noticias-otaku", category=cat_mural)
-    await ctx.guild.create_text_channel("🌸┃cantinho-cosplay", category=cat_mural)
-    await ctx.guild.create_text_channel("🎨┃fanarts-da-comunidade", category=cat_mural)
-    
-    cat_conversas = await ctx.guild.create_category("💬 ━━ ALDEIA PRINCIPAL ━━")
-    await ctx.guild.create_text_channel("💬┃chat-otaku", category=cat_conversas)
-    await ctx.guild.create_text_channel("🤖┃comandos-bots", category=cat_conversas)
-    await ctx.guild.create_text_channel("🔮┃recomendações-animes", category=cat_conversas)
-    await ctx.guild.create_text_channel("📖┃mangas-e-webtoons", category=cat_conversas)
-    await ctx.guild.create_text_channel("🎭┃memes-otaku", category=cat_conversas)
-    
-    cat_spoiler = await ctx.guild.create_category("🚨 ━━ SPOILER ZONE ━━")
-    await ctx.guild.create_text_channel("💥┃mangas-capitulo-novo", category=cat_spoiler)
-    await ctx.guild.create_text_channel("🎬┃episodio-da-semana", category=cat_spoiler)
-    await ctx.guild.create_text_channel("🧠┃teorias-e-debates", category=cat_spoiler)
-    
-    cat_jogos = await ctx.guild.create_category("🎮 ━━ JOGOS ANIME ━━")
-    await ctx.guild.create_text_channel("🃏┃genshin-e-honkai", category=cat_jogos)
-    await ctx.guild.create_text_channel("⚔️┃anime-fighting-games", category=cat_jogos)
-    await ctx.guild.create_text_channel("🤖┃mudae-e-minigames", category=cat_jogos)
-    
-    cat_calls = await ctx.guild.create_category("🎙️ ━━ LOUNGES JAPÃO ━━")
-    for i in range(1, 4): await ctx.guild.create_voice_channel(f"🔊 Distrito Kawaii {i:02d}", category=cat_calls)
-    await ctx.guild.create_voice_channel("🎵 Anime Openings (Música)", category=cat_calls)
-    await ctx.guild.create_voice_channel("🔊 💤 AFK (Dormindo)", category=cat_calls)
-
-# ---------- COMANDO 12: MEGA RPG (Guildas/Mesas) ----------
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def criar_rpg(ctx):
-    await limpar_servidor(ctx)
-    cargos = ["👑 Mestre Lendário", "🛡️ Paladino Veterano", "🔮 Mago Supremo", "🏹 Arqueiro", "🗡️ Ladino", "👤 Aventureiro"]
-    for nc in cargos: await ctx.guild.create_role(name=nc)
-    
-    cat_mural = await ctx.guild.create_category("📜 ━━ MURAL DO REINO ━━")
-    await ctx.guild.create_text_channel("📢┃anuncios-e-quests", category=cat_mural)
-    await ctx.guild.create_text_channel("📋┃sistemas-e-regras", category=cat_mural)
-    await ctx.guild.create_text_channel("📖┃historias-do-mundo", category=cat_mural)
-    await ctx.guild.create_text_channel("🗺️┃mapas-e-cenarios", category=cat_mural)
-    
-    cat_aventura = await ctx.guild.create_category("🛡️ ━━ TAVERNA PRINCIPAL ━━")
-    await ctx.guild.create_text_channel("💬┃chat-taverna", category=cat_aventura)
-    await ctx.guild.create_text_channel("🎲┃fichas-e-dados", category=cat_aventura)
-    await ctx.guild.create_text_channel("🎭┃memes-rpg", category=cat_aventura)
-    await ctx.guild.create_text_channel("🤖┃bots-de-dados", category=cat_aventura)
-    
-    cat_mestre = await ctx.guild.create_category("🔒 ━━ CONSELHO DOS MESTRES ━━")
-    await ctx.guild.create_text_channel("🔒┃chat-dos-mestres", category=cat_mestre)
-    await ctx.guild.create_text_channel("💡┃ideias-de-campanhas", category=cat_mestre)
-    await ctx.guild.create_text_channel("📦┃recursos-e-tokens", category=cat_mestre)
-    
-    cat_recruta = await ctx.guild.create_category("🔍 ━━ RECRUTAMENTO ━━")
-    await ctx.guild.create_text_channel("🤝┃procuro-mesa", category=cat_recruta)
-    await ctx.guild.create_text_channel("📜┃procuro-jogadores", category=cat_recruta)
-    
-    cat_calls = await ctx.guild.create_category("🎙️ ━━ MESAS DE ÁUDIO ━━")
-    for i in range(1, 5): await ctx.guild.create_voice_channel(f"🎲 Mesa de RPG {i:02d}", category=cat_calls)
-    await ctx.guild.create_voice_channel("🔊 Resenha pós-Sessão", category=cat_calls)
-    await ctx.guild.create_voice_channel("🔊 💤 AFK (Desmaiado)", category=cat_calls)
-
-# ---------- COMANDOS AUXILIARES (TICKET) ----------
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def ticket(ctx):
-    embed = discord.Embed(
-        title="🎫 Central de Atendimento",
-        description="Precisa de ajuda da nossa Staff ou quer realizar uma compra?\nClique no botão abaixo para abrir um ticket privado!",
-        color=discord.Color.blue()
-    )
-    await ctx.send(embed=embed, view=TicketView())
-
-@bot.command()
-async def fechar(ctx):
-    if "🎫-" in ctx.channel.name:
-        await ctx.send("🔒 Fechando este ticket em 5 segundos...")
-        await asyncio.sleep(5)
-        await ctx.channel.delete()
-    else:
-        await ctx.send("❌ Este comando só pode ser usado dentro de um canal de ticket!")
-
-# ---------- INICIALIZAÇÃO DIRETA PARA O RENDER ----------
-async def main():
-    keep_alive()
-    token_secreto = os.getenv("DISCORD_TOKEN", "SEM_TOKEN")
-    await bot.start(token_secreto)
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    await ctx.guild.create_text_channel("🎬┃trailers-e-novidades
