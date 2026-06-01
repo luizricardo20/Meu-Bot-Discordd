@@ -1,4 +1,5 @@
 import discord
+import os
 from discord.ext import commands
 from flask import Flask
 from threading import Thread
@@ -28,15 +29,12 @@ async def on_ready():
 @bot.command()
 async def criar(ctx):
     guild = ctx.guild
-    # Cria a categoria principal
     categoria = await guild.create_category("⚡ Servidor Automático")
-    # Cria os canais dentro da categoria
     await guild.create_text_channel("💬-chat-geral", category=categoria)
     await guild.create_text_channel("📢-avisos", category=categoria)
     await guild.create_voice_channel("🔊-conversas", category=categoria)
     await ctx.send("✅ Estrutura do servidor criada com sucesso!")
 
-# Ativa o servidor web e inicia o bot
+# Ativa o servidor web e inicia o bot com segurança
 keep_alive()
-bot.run('MTUxMDgxNzA0MzkyOTIzNTQ4Nw.GiXuUQ.z8K1J4nWmJK0DRDd6fCudq-1z-r05_boWb2ud0')
-  
+bot.run(os.environ.get('DISCORD_TOKEN'))
