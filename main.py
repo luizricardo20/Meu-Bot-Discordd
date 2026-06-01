@@ -1,4 +1,5 @@
 import os
+import asyncio
 import discord
 from discord.ext import commands
 from discord.ui import Button, View
@@ -79,7 +80,7 @@ async def limpar_servidor(ctx):
             try: await role.delete()
             except: pass
 
-# ---------- COMANDO 1: ULTRA COMUNIDADE (60+ CANAIS) ----------
+# ---------- COMANDO 1: ULTRA COMUNIDADE ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def criar_comunidade(ctx):
@@ -154,7 +155,7 @@ async def criar_comunidade(ctx):
     await ctx.guild.create_voice_channel("📻 Rádio 24h", category=cat_voz_priv)
     await ctx.guild.create_voice_channel("🔊 💤 AFK (Inativo)", category=cat_voz_priv)
 
-# ---------- COMANDO 2: ULTRA JOGOS (70+ CANAIS) ----------
+# ---------- COMANDO 2: ULTRA JOGOS ----------
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def criar_jogos(ctx):
@@ -184,4 +185,3 @@ async def criar_jogos(ctx):
     await ctx.guild.create_text_channel("🎯┃cs2", category=cat_fps)
     await ctx.guild.create_text_channel("👑┃warzone", category=cat_fps)
     await ctx.guild.create_text_channel("🔥┃free-fire", category=cat_fps)
-            
