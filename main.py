@@ -206,13 +206,11 @@ async def fechar(ctx):
     else:
         await ctx.send("❌ Este comando só pode ser usado dentro de um canal de ticket!")
 
-# ---------- INICIALIZAÇÃO ASSÍNCRONA PARA O RENDER ----------
+# ---------- INICIALIZAÇÃO DIRETA PARA O RENDER ----------
 async def main():
     keep_alive()
-    token = os.environ.get("DISCORD_TOKEN")
-    if token is None:
-        token = "SEU_TOKEN_AQUI"
-    await bot.start(token)
+    token_secreto = os.getenv("DISCORD_TOKEN", "SEM_TOKEN")
+    await bot.start(token_secreto)
 
 if __name__ == "__main__":
-    
+    asyncio.run(main())
